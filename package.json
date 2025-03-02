@@ -1,13 +1,13 @@
 {
   "name": "emoji-modifier",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "deploy": "gcloud run deploy emoji-modifier --project=emoji-modifier-server --source=. --region=asia-northeast1 --allow-unauthenticated"
+    "deploy": "gcloud run deploy emoji-modifier --project=emoji-modifier-server --source=. --region=asia-northeast1 --allow-unauthenticated --max-instances=1"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.39.0",

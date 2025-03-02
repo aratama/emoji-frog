@@ -11,6 +11,7 @@ const responseSchema = z.object({
 });
 
 export default function Home() {
+  const [selectedSvgKey, setSelectedSvgKey] = useState<string | null>(null);
   const [selectedSvgContent, setSelectedSvgContent] = useState<string | null>(
     null
   );
@@ -19,11 +20,12 @@ export default function Home() {
   );
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSelectEmoji = (svgContent: string) => {
+  const handleSelectEmoji = (svgKey: string, svgContent: string) => {
     console.log(
       "Selected emoji in Home component:",
-      svgContent.substring(0, 50) + "..."
+      `Key: ${svgKey}, Content: ${svgContent.substring(0, 50)}...`
     );
+    setSelectedSvgKey(svgKey);
     setSelectedSvgContent(svgContent);
     setGeneratedSvgContent(null);
   };
@@ -31,16 +33,13 @@ export default function Home() {
   const handleSubmit = async (description: string) => {
     console.log("Submitting form with description:", description);
 
-    if (!selectedSvgContent) {
+    if (!selectedSvgKey) {
       console.error("No emoji selected");
       alert("絵文字を選択してください");
       return;
     }
 
-    console.log(
-      "Selected SVG content:",
-      selectedSvgContent.substring(0, 50) + "..."
-    );
+    console.log("Selected SVG key:", selectedSvgKey);
 
     setIsLoading(true);
 
@@ -49,7 +48,7 @@ export default function Home() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ svgContent: selectedSvgContent, description }),
+      body: JSON.stringify({ svgKey: selectedSvgKey, description }),
     });
 
     const json = await response.json();
@@ -79,7 +78,10 @@ export default function Home() {
     <div className="min-h-screen bg-gray-50">
       <header className="bg-white shadow">
         <div className="mx-auto py-6 px-4 sm:px-6 lg:px-8">
-          <h1 className="text-xl font-bold text-gray-900">emoji-modifier</h1>
+          <h1 className="text-xl font-bold text-gray-900">
+            emoji-modifier
+            <span className="text-sm text-gray-400 ml-2">Version 0.2</span>
+          </h1>
         </div>
       </header>
       <main className="mx-auto py-6 sm:px-6 lg:px-8">

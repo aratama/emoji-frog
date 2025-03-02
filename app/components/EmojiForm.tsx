@@ -1,6 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
+const MAX_DESCRIPTION_LENGTH = 200;
 
 interface EmojiFormProps {
   onSubmit: (description: string) => void;
@@ -9,6 +11,11 @@ interface EmojiFormProps {
 
 export default function EmojiForm({ onSubmit, isLoading }: EmojiFormProps) {
   const [description, setDescription] = useState("");
+  const [remainingChars, setRemainingChars] = useState(MAX_DESCRIPTION_LENGTH);
+
+  useEffect(() => {
+    setRemainingChars(MAX_DESCRIPTION_LENGTH - description.length);
+  }, [description]);
 
   const handleButtonClick = () => {
     console.log("Button clicked with description:", description);
@@ -33,8 +40,12 @@ export default function EmojiForm({ onSubmit, isLoading }: EmojiFormProps) {
           placeholder="例: 笑顔の絵文字にサングラスをつけて"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
+          maxLength={MAX_DESCRIPTION_LENGTH}
           required
         />
+        <div className="mt-1 text-sm text-gray-500 text-right">
+          残り {remainingChars} 文字
+        </div>
       </div>
       <button
         type="button"

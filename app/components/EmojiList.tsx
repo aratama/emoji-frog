@@ -8,7 +8,7 @@ interface CategoryData {
 }
 
 interface EmojiListProps {
-  onSelectEmoji: (svgContent: string) => void;
+  onSelectEmoji: (svgKey: string, svgContent: string) => void;
 }
 
 export default function EmojiList({ onSelectEmoji }: EmojiListProps) {
@@ -58,7 +58,9 @@ export default function EmojiList({ onSelectEmoji }: EmojiListProps) {
     }
     const content = await response.text();
     console.log(`Selected ${emojiKey}:`, content.substring(0, 50) + "...");
-    onSelectEmoji(content);
+    // SVGのキーとコンテンツの両方を渡す
+    const svgKey = `${category}/${emoji.replace(".svg", "")}`;
+    onSelectEmoji(svgKey, content);
   };
 
   return (

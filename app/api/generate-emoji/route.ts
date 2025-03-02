@@ -1,11 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import Anthropic from '@anthropic-ai/sdk';
+import fs from 'fs';
+import path from 'path';
+
+const MAX_DESCRIPTION_LENGTH = 200;
 
 // Define the request schema using Zod
 const requestSchema = z.object({
-  svgContent: z.string(),
-  description: z.string().min(1),
+  svgKey: z.string().regex(/^[a-z]+\/[a-z0-9\-]+(?:\-[a-z0-9]+)*(?:\-[0-9a-f]{4})*$/i, 
+    "Invalid SVG key format. Expected format: 'category/emoji-id' (e.g. 'activities/1f3a0')"),
+  description: z.string().min(1).max(MAX_DESCRIPTION_LENGTH),
 });
 
 // Initialize the Anthropic client
@@ -31,11 +36,26 @@ export async function POST(request: NextRequest) {
       );
     }
     
-    const { svgContent, description } = result.data;
+    const { svgKey, description } = result.data;
     console.log('Validated request data:', { 
-      svgContent: svgContent.substring(0, 50) + '...', 
+      svgKey, 
       description 
     });
+    
+    // Read SVG file from local assets
+    const svgPath = path.join(process.cwd(), 'public', 'assets', `${svgKey}.svg`);
+    
+    let svgContent;
+    try {
+      svgContent = fs.readFileSync(svgPath, 'utf8');
+      console.log('Read SVG file:', svgPath);
+    } catch (error) {
+      console.error('Error reading SVG file:', error);
+      return NextResponse.json(
+        { error: 'Failed to read SVG file', details: `SVG key: ${svgKey}` },
+        { status: 404 }
+      );
+    }
     
     // Create the prompt for Claude
     const prompt = `
