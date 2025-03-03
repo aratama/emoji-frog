@@ -53,21 +53,46 @@ export default function EmojiDisplay({
     const svgWidth = svgElement.width.baseVal.value || 128;
     const svgHeight = svgElement.height.baseVal.value || 128;
 
-    // Create a canvas with the same dimensions
+    // Get device pixel ratio (higher on Retina/high-DPI displays)
+    const pixelRatio = window.devicePixelRatio || 1;
+
+    // Create a canvas with dimensions adjusted for device pixel ratio
     const canvas = document.createElement("canvas");
-    canvas.width = svgWidth;
-    canvas.height = svgHeight;
+    canvas.width = svgWidth * pixelRatio;
+    canvas.height = svgHeight * pixelRatio;
+
+    // Set display size (css pixels)
+    canvas.style.width = `${svgWidth}px`;
+    canvas.style.height = `${svgHeight}px`;
+
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
+    // Scale all drawing operations by the pixel ratio
+    ctx.scale(pixelRatio, pixelRatio);
+
     // Create an image from the SVG
     const img = new Image();
-    const svgBlob = new Blob([svgContent], { type: "image/svg+xml" });
+
+    // Ensure SVG has explicit dimensions
+    let processedSvgContent = svgContent;
+    if (
+      !processedSvgContent.includes("width=") ||
+      !processedSvgContent.includes("height=")
+    ) {
+      // Add width and height attributes if they don't exist
+      processedSvgContent = processedSvgContent.replace(
+        "<svg",
+        `<svg width="${svgWidth}" height="${svgHeight}"`
+      );
+    }
+
+    const svgBlob = new Blob([processedSvgContent], { type: "image/svg+xml" });
     const url = URL.createObjectURL(svgBlob);
 
     img.onload = () => {
-      // Draw the image on the canvas
-      ctx.drawImage(img, 0, 0);
+      // Draw the image on the canvas at the correct size
+      ctx.drawImage(img, 0, 0, svgWidth, svgHeight);
 
       // Convert canvas to PNG
       const pngUrl = canvas.toDataURL("image/png");

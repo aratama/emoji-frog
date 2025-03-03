@@ -1,8 +1,8 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 import { categories, EnNames } from "../emoji";
-import Image from "next/image";
 
 interface EmojiListProps {
   onSelectEmoji: (svgKey: string, svgContent: string) => void;
@@ -77,6 +77,8 @@ export default function EmojiList({ onSelectEmoji }: EmojiListProps) {
                       src={`/assets/${selectedCategory}/${emoji}`}
                       alt={emoji.replace(".svg", "")}
                       className="w-full h-full object-contain"
+                      layout="fill"
+                      objectFit="contain"
                     />
                   </div>
                 </button>
