@@ -91,21 +91,23 @@ export default function EmojiDisplay({
     <div className="flex flex-col items-center">
       <div
         ref={svgRef}
-        className={`w-32 h-32 ${showDownloadButtons ? "mb-4" : ""}`}
+        className={`w-24 h-24 sm:w-32 sm:h-32 ${
+          showDownloadButtons ? "mb-4" : ""
+        }`}
         dangerouslySetInnerHTML={{ __html: svgContent }}
       />
 
       {showDownloadButtons && (
-        <div className="flex space-x-2">
+        <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2 w-full sm:w-auto">
           <button
             onClick={downloadAsSVG}
-            className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 text-sm"
+            className="px-4 py-3 bg-blue-500 text-white rounded hover:bg-blue-600 text-sm w-full sm:w-auto"
           >
             SVGとしてダウンロード
           </button>
           <button
             onClick={downloadAsPNG}
-            className="px-3 py-1 bg-green-500 text-white rounded hover:bg-green-600 text-sm"
+            className="px-4 py-3 bg-green-500 text-white rounded hover:bg-green-600 text-sm w-full sm:w-auto"
           >
             PNGとしてダウンロード
           </button>
