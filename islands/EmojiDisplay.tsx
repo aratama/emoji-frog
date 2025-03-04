@@ -1,38 +1,34 @@
-"use client";
-import { useRef } from "react";
+import { useRef } from "preact/hooks";
+import {
+  isLoadingSignal,
+  generatedSvgContentSignal,
+} from "../data/signals.tsx";
 
-interface EmojiDisplayProps {
-  svgContent: string | null;
-  isLoading: boolean;
-  showDownloadButtons?: boolean;
-}
-
-export default function EmojiDisplay({
-  svgContent,
-  isLoading,
-  showDownloadButtons = false,
-}: EmojiDisplayProps) {
+export default function EmojiDisplay() {
   const svgRef = useRef<HTMLDivElement>(null);
-  if (isLoading) {
+
+  if (isLoadingSignal.value) {
     return (
-      <div className="flex items-center justify-center">
-        <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-500"></div>
+      <div class="flex items-center justify-center">
+        <div class="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-500"></div>
       </div>
     );
   }
 
-  if (!svgContent) {
+  if (!generatedSvgContentSignal.value) {
     return (
-      <div className="flex items-center justify-center text-gray-500">
+      <div class="flex items-center justify-center text-gray-500">
         <p>変更内容を入力して、「絵文字生成」を押してください</p>
       </div>
     );
   }
 
   const downloadAsSVG = () => {
-    if (!svgContent) return;
+    if (!generatedSvgContentSignal.value) return;
 
-    const blob = new Blob([svgContent], { type: "image/svg+xml" });
+    const blob = new Blob([generatedSvgContentSignal.value], {
+      type: "image/svg+xml",
+    });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
@@ -44,7 +40,7 @@ export default function EmojiDisplay({
   };
 
   const downloadAsPNG = () => {
-    if (!svgContent || !svgRef.current) return;
+    if (!generatedSvgContentSignal.value || !svgRef.current) return;
 
     const svgElement = svgRef.current.querySelector("svg");
     if (!svgElement) return;
@@ -75,7 +71,7 @@ export default function EmojiDisplay({
     const img = new Image();
 
     // Ensure SVG has explicit dimensions
-    let processedSvgContent = svgContent;
+    let processedSvgContent = generatedSvgContentSignal.value;
     if (
       !processedSvgContent.includes("width=") ||
       !processedSvgContent.includes("height=")
@@ -113,31 +109,31 @@ export default function EmojiDisplay({
   };
 
   return (
-    <div className="flex flex-col items-center">
+    <div class="flex flex-col items-center">
       <div
         ref={svgRef}
-        className={`w-24 h-24 sm:w-32 sm:h-32 ${
-          showDownloadButtons ? "mb-4" : ""
-        }`}
-        dangerouslySetInnerHTML={{ __html: svgContent }}
+        class="w-24 h-24 sm:w-32 sm:h-32 mb-4"
+        dangerouslySetInnerHTML={{
+          __html: generatedSvgContentSignal.value,
+        }}
       />
 
-      {showDownloadButtons && (
-        <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2 w-full sm:w-auto">
-          <button
-            onClick={downloadAsSVG}
-            className="px-4 py-3 bg-blue-500 text-white rounded hover:bg-blue-600 text-sm w-full sm:w-auto"
-          >
-            SVGとしてダウンロード
-          </button>
-          <button
-            onClick={downloadAsPNG}
-            className="px-4 py-3 bg-green-500 text-white rounded hover:bg-green-600 text-sm w-full sm:w-auto"
-          >
-            PNGとしてダウンロード
-          </button>
-        </div>
-      )}
+      <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2 w-full sm:w-auto">
+        <button
+          type="button"
+          onClick={downloadAsSVG}
+          class="px-4 py-3 bg-blue-500 text-white rounded hover:bg-blue-600 text-sm w-full sm:w-auto"
+        >
+          SVGとしてダウンロード
+        </button>
+        <button
+          type="button"
+          onClick={downloadAsPNG}
+          class="px-4 py-3 bg-green-500 text-white rounded hover:bg-green-600 text-sm w-full sm:w-auto"
+        >
+          PNGとしてダウンロード
+        </button>
+      </div>
     </div>
   );
 }
