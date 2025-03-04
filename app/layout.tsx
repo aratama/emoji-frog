@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Emoji Modifier",
+  title: "Emoji Frog",
   description: "選択した絵文字のSVG画像を生成AIで加工するツール",
 };
 
@@ -24,7 +24,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja">
-      <link rel="icon" href="/favicon.svg" sizes="any" type="image/svg+xml" />
+      <link rel="icon" href="/favicon.png" sizes="any" type="image/png" />
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
