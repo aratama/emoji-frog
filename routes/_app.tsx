@@ -2,7 +2,7 @@ import { PageProps } from "$fresh/server.ts";
 import { ApplicationURL } from "../data/constants.ts";
 
 export default function Layout({ Component }: PageProps) {
-  const ogpImage = `${ApplicationURL}/ogp.png`;
+  const ogpImage = `${ApplicationURL}ogp.png`;
   return (
     <html lang="ja">
       <head>
