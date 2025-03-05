@@ -20,7 +20,7 @@ export default function Home() {
             <h1 class="text-xl font-bold text-gray-900 flex items-center gap-2">
               <img src="/favicon.png" class="w-8 h-8" />
               <span>Emoji Frog</span>
-              <span class="text-sm text-gray-400 ml-2">Version 0.4</span>
+              <span class="text-sm text-gray-400 ml-2">Version 0.5</span>
             </h1>
           </div>
         </header>
