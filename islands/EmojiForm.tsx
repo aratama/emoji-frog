@@ -65,7 +65,7 @@ export default function EmojiForm() {
   };
 
   return (
-    <div class="space-y-4">
+    <div class="space-y-4" id="emoji-form">
       <div className="flex items-center mb-4 gap-8 justify-center">
         {selectedSvgKeySignal.value ? (
           <img

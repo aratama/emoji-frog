@@ -5,7 +5,6 @@
 import * as $_app from "./routes/_app.tsx";
 import * as $api_generate_emoji from "./routes/api/generate-emoji.ts";
 import * as $index from "./routes/index.tsx";
-import * as $Disclosure from "./islands/Disclosure.tsx";
 import * as $EmojiForm from "./islands/EmojiForm.tsx";
 import * as $EmojiList from "./islands/EmojiList.tsx";
 import type { Manifest } from "$fresh/server.ts";
@@ -17,7 +16,6 @@ const manifest = {
     "./routes/index.tsx": $index,
   },
   islands: {
-    "./islands/Disclosure.tsx": $Disclosure,
     "./islands/EmojiForm.tsx": $EmojiForm,
     "./islands/EmojiList.tsx": $EmojiList,
   },

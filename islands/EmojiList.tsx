@@ -5,7 +5,7 @@ import {
   generatedSvgContentSignal,
 } from "../data/signals.tsx";
 
-export default function EmojiList() {
+export default function EmojiList(props: { scroll: boolean }) {
   const [selectedCategory, setSelectedCategory] = useState<EnNames | null>(
     categories[0].name_en
   );
@@ -30,6 +30,13 @@ export default function EmojiList() {
     const svgKey = `${category}/${emoji.replace(".svg", "")}`;
     selectedSvgKeySignal.value = svgKey;
     generatedSvgContentSignal.value = null;
+
+    if (props.scroll) {
+      document.querySelector("#emoji-form")?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
   };
 
   return (

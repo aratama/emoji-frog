@@ -1,5 +1,4 @@
 import { Head } from "$fresh/runtime.ts";
-import { Disclosure } from "../islands/Disclosure.tsx";
 import EmojiForm from "../islands/EmojiForm.tsx";
 import EmojiList from "../islands/EmojiList.tsx";
 
@@ -28,22 +27,18 @@ export default function Home() {
           <div class="flex flex-col lg:flex-row gap-8">
             {/* Left Panel */}
             <div class="w-full lg:w-1/2 p-6 rounded-lg shadow">
+              <h2 class="text-xl font-semibold mb-4">
+                1.元になる絵文字を選んでください
+              </h2>
+
               {/* Desktop view - always visible */}
               <div class="hidden lg:block">
-                <h2 class="text-xl font-semibold mb-4">
-                  1.元になる絵文字を選んでください
-                </h2>
-                <EmojiList />
+                <EmojiList scroll={false} />
               </div>
 
               {/* Mobile view - with disclosure */}
               <div class="lg:hidden">
-                <Disclosure
-                  title="1.元になる絵文字を選んでください"
-                  defaultOpen
-                >
-                  <EmojiList />
-                </Disclosure>
+                <EmojiList scroll />
               </div>
             </div>
 
