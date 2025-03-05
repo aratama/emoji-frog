@@ -217,6 +217,6 @@ export const roles = {
     "1f469-1f3fc-200d-1f4bb.svg",
     "1f469-1f3fd-200d-1f4bb.svg",
     "1f469-1f3fe-200d-1f4bb.svg",
-    "1f469-1f3ff-200d-1f4bb.svg"
+    "1f469-1f3ff-200d-1f4bb.svg",
   ],
 } as const;

@@ -1,16 +1,17 @@
-# emoji-modifier
+# Emoji Frog
 
 ![](docs/screenshot.png)
 
 ## 概要
 
-emoji-modifier は、絵文字の SVG 画像を生成 AI で加工するシンプルなウェブアプリケーションです。選択した絵文字を、テキストで指定した内容に基づいて変更することができます。
+Emoji Frog は、絵文字の SVG 画像を生成 AI で加工するシンプルなウェブアプリケーションです。
+選択した絵文字を、テキストで指定した内容に基づいて変更することができます。
 
 ## デモ
 
 以下の URL で実際に実行を試すことができます。
 
-https://emoji-modifier-352543416583.asia-northeast1.run.app/
+https://emoji-frog.deno.dev/
 
 ### 主な機能
 
@@ -22,11 +23,12 @@ https://emoji-modifier-352543416583.asia-northeast1.run.app/
 ### 使用技術
 
 - TypeScript
-- React
-- Next.js
+- Deno / Deno Fresh
+- preact
+- Deno Deploy
 - Tailwind CSS
 - Claude API (claude-3-7-sonnet-20250219)
-- Zod（バリデーション）
+- Zod
 
 ## 使い方
 
@@ -42,7 +44,7 @@ https://emoji-modifier-352543416583.asia-northeast1.run.app/
 
 3. **絵文字を生成する**：
 
-   - 「絵文字生成」ボタンをクリックします
+   - 「絵文字編集」ボタンをクリックします
    - AI が処理を行い、指定した内容に基づいて新しい絵文字が生成されます
 
 4. **絵文字をダウンロードする**：
