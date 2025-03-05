@@ -1,6 +1,8 @@
 import { PageProps } from "$fresh/server.ts";
+import { ApplicationURL } from "../data/constants.ts";
 
 export default function Layout({ Component }: PageProps) {
+  const ogpImage = `${ApplicationURL}/ogp.png`;
   return (
     <html lang="ja">
       <head>
@@ -16,10 +18,10 @@ export default function Layout({ Component }: PageProps) {
           property="og:description"
           content="選択した絵文字のSVG画像を生成AIで加工するツール"
         />
-        <meta property="og:image" content="/ogp.png" />
+        <meta property="og:image" content={ogpImage} />
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="Emoji Frog" />
-        <meta property="og:url" content="https://emoji-frog.deno.dev/" />
+        <meta property="og:url" content={ApplicationURL} />
 
         {/* Twitter Card Tags */}
         <meta name="twitter:card" content="summary_large_image" />
@@ -28,7 +30,7 @@ export default function Layout({ Component }: PageProps) {
           name="twitter:description"
           content="選択した絵文字のSVG画像を生成AIで加工するツール"
         />
-        <meta name="twitter:image" content="/ogp.png" />
+        <meta name="twitter:image" content={ogpImage} />
       </head>
       <body>
         <Component />
