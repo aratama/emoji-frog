@@ -1,0 +1,12 @@
+# プロジェクトガイドライン
+
+- 思考や応答は日本語で行ってください。
+- デフォルトのシェルはbashです。
+- スクリプトを書いてローカルで実行するときは、`script`フォルダ以下にTypeScriptでスクリプトを書いて、nodeで実行してください
+- bashスクリプトは書かないでください。
+- denoプロジェクトを起動するときのコマンドは `deno task start` です。
+- ときどき `deno lint --fix` を実行してlintのエラーは修正してください。
+
+# 参考
+
+- https://docs.cline.bot/improving-your-prompting-skills/prompting

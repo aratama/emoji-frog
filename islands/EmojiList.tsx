@@ -2,7 +2,6 @@ import { useState } from "preact/hooks";
 import { categories, EnNames } from "../data/emoji/index.ts";
 import {
   selectedSvgKeySignal,
-  isLoadingSignal,
   generatedSvgContentSignal,
 } from "../data/signals.tsx";
 
