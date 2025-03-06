@@ -113,6 +113,6 @@ xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 ```
 
-## 注意事項
+# 参考
 
-- Cline はこの readme.md の「デモ」と「オリジナルのプロンプト」のセクションを改変してはいけません。また、最初のスクリーンショットを改変してはいけません。
+- https://docs.cline.bot/improving-your-prompting-skills/prompting

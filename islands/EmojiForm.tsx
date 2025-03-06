@@ -80,7 +80,11 @@ export default function EmojiForm() {
 
         <img class="w-12 h-12" src="/assets/symbols/27a1.svg" />
 
-        {generatedSvgContentSignal.value ? (
+        {isLoadingSignal.value ? (
+          <div class="w-24 h-24 sm:w-32 sm:h-32 flex items-center justify-center text-gray-500 border-2 border-dashed border-gray-300 rounded-md bg-white">
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+          </div>
+        ) : generatedSvgContentSignal.value ? (
           <div
             ref={svgRef}
             class="w-24 h-24 sm:w-32 sm:h-32"
@@ -134,7 +138,7 @@ export default function EmojiForm() {
             downloadAsSVG(generatedSvgContentSignal.value)
           }
           class="px-4 py-3 bg-blue-500 text-white rounded enable:hover:bg-blue-600 text-sm w-full sm:w-auto disabled:opacity-20"
-          disabled={!generatedSvgContentSignal.value}
+          disabled={!generatedSvgContentSignal.value || isLoadingSignal.value}
         >
           SVGとしてダウンロード
         </button>
@@ -147,7 +151,7 @@ export default function EmojiForm() {
             downloadAsPNG(generatedSvgContentSignal.value, svgRef.current);
           }}
           class="px-4 py-3 bg-green-500 text-white rounded enable:hover:bg-green-600 text-sm w-full sm:w-auto disabled:opacity-20"
-          disabled={!generatedSvgContentSignal.value}
+          disabled={!generatedSvgContentSignal.value || isLoadingSignal.value}
         >
           PNGとしてダウンロード
         </button>
