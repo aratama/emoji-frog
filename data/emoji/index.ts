@@ -47,4 +47,6 @@ export type EmojiCategory = {
   files: string[];
 };
 
+export type JaNames = (typeof categories)[number]["name_ja"];
+
 export type EnNames = (typeof categories)[number]["name_en"];

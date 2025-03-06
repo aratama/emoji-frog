@@ -3,9 +3,18 @@ import { categories, EnNames } from "../data/emoji/index.ts";
 import {
   selectedSvgKeySignal,
   generatedSvgContentSignal,
+  Languages,
 } from "../data/signals.tsx";
+import { getTranslation } from "../data/i18n.ts";
 
-export default function EmojiList(props: { scroll: boolean }) {
+export default function EmojiList(props: {
+  langCode: Languages;
+  scroll: boolean;
+}) {
+  const { langCode } = props;
+
+  const t = getTranslation(langCode);
+
   const [selectedCategory, setSelectedCategory] = useState<EnNames | null>(
     categories[0].name_en
   );
@@ -54,7 +63,7 @@ export default function EmojiList(props: { scroll: boolean }) {
               }`}
               onClick={() => handleSelectCategory(category.name_en)}
             >
-              {category.name_ja}
+              {t(category.name_ja)}
             </button>
           ))}
         </div>
@@ -76,7 +85,9 @@ export default function EmojiList(props: { scroll: boolean }) {
                       : "bg-white hover:bg-gray-100"
                   }`}
                   onClick={() => handleSelectEmoji(selectedCategory!, emoji)}
-                  aria-label={`Select ${emoji.replace(".svg", "")} emoji`}
+                  aria-label={t("絵文字を選択: {0}", {
+                    "0": emoji.replace(".svg", ""),
+                  })}
                 >
                   <div class="w-full h-auto aspect-square relative">
                     <img

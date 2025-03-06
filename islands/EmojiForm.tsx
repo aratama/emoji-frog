@@ -4,12 +4,18 @@ import {
   isLoadingSignal,
   generatedSvgContentSignal,
   description,
+  Languages,
 } from "../data/signals.tsx";
 import { downloadAsPNG, downloadAsSVG } from "../data/export.ts";
+import { getTranslation } from "../data/i18n.ts";
 
 const MAX_DESCRIPTION_LENGTH = 200;
 
-export default function EmojiForm() {
+export default function EmojiForm(props: { langCode: Languages }) {
+  const { langCode } = props;
+
+  const t = getTranslation(langCode);
+
   const [remainingChars, setRemainingChars] = useState(MAX_DESCRIPTION_LENGTH);
 
   const svgRef = useRef<HTMLDivElement>(null);
@@ -24,7 +30,7 @@ export default function EmojiForm() {
 
     if (!selectedSvgKeySignal.value) {
       console.error("No emoji selected");
-      alert("絵文字を選択してください");
+      alert(t("絵文字を選択してください"));
       return;
     }
 
@@ -47,14 +53,14 @@ export default function EmojiForm() {
 
     if (!response.ok) {
       console.error("Failed to generate emoji:", json);
-      alert("絵文字の生成に失敗しました");
+      alert(t("絵文字の生成に失敗しました"));
       isLoadingSignal.value = false;
       return;
     }
 
     if (!json.svg) {
       console.error("Invalid response from API:", json);
-      alert("APIからの無効な応答");
+      alert(t("APIからの無効な応答"));
       isLoadingSignal.value = false;
       return;
     }
@@ -73,15 +79,15 @@ export default function EmojiForm() {
             src={`/assets/${selectedSvgKeySignal.value}.svg`}
           />
         ) : (
-          <div className="w-24 h-24 sm:w-32 sm:h-32 flex items-center justify-center text-gray-500 border-2 border-dashed border-gray-300 rounded-md bg-white">
+          <div className="w-24 h-24 sm:w-32 sm:h-32 flex items-center justify-center text-gray-500 border-2 border-dashed border-gray-300 rounded-md bg-white shrink-0 grow-0">
             <div className="text-center"></div>
           </div>
         )}
 
-        <img class="w-12 h-12" src="/assets/symbols/27a1.svg" />
+        <img class="w-10 h-10 shrink" src="/assets/symbols/27a1.svg" />
 
         {isLoadingSignal.value ? (
-          <div class="w-24 h-24 sm:w-32 sm:h-32 flex items-center justify-center text-gray-500 border-2 border-dashed border-gray-300 rounded-md bg-white">
+          <div class="w-24 h-24 sm:w-32 sm:h-32 flex items-center justify-center text-gray-500 border-2 border-dashed border-gray-300 rounded-md bg-white shrink-0 grow-0">
             <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
           </div>
         ) : generatedSvgContentSignal.value ? (
@@ -100,13 +106,13 @@ export default function EmojiForm() {
 
       <div>
         <div class="mt-1 text-sm text-gray-500 text-right">
-          残り {remainingChars} 文字
+          {t("残り {0} 文字", { "0": remainingChars })}
         </div>
         <textarea
           id="description"
           rows={4}
           class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-          placeholder="例: サングラスを青くしてください"
+          placeholder={t("例: サングラスを青くしてください")}
           value={description}
           onInput={(e) =>
             (description.value = (e.target as HTMLTextAreaElement).value)
@@ -127,7 +133,7 @@ export default function EmojiForm() {
         }`}
         onClick={handleButtonClick}
       >
-        {isLoadingSignal.value ? "編集中..." : "絵文字編集"}
+        {isLoadingSignal.value ? t("編集中...") : t("絵文字編集")}
       </button>
 
       <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2 w-full sm:w-auto justify-center">
@@ -140,7 +146,7 @@ export default function EmojiForm() {
           class="px-4 py-3 bg-blue-500 text-white rounded enable:hover:bg-blue-600 text-sm w-full sm:w-auto disabled:opacity-20"
           disabled={!generatedSvgContentSignal.value || isLoadingSignal.value}
         >
-          SVGとしてダウンロード
+          {t("SVGとしてダウンロード")}
         </button>
         <button
           type="button"
@@ -153,7 +159,7 @@ export default function EmojiForm() {
           class="px-4 py-3 bg-green-500 text-white rounded enable:hover:bg-green-600 text-sm w-full sm:w-auto disabled:opacity-20"
           disabled={!generatedSvgContentSignal.value || isLoadingSignal.value}
         >
-          PNGとしてダウンロード
+          {t("PNGとしてダウンロード")}
         </button>
       </div>
     </div>

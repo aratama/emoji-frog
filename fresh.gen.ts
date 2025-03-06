@@ -7,6 +7,7 @@ import * as $api_generate_emoji from "./routes/api/generate-emoji.ts";
 import * as $index from "./routes/index.tsx";
 import * as $EmojiForm from "./islands/EmojiForm.tsx";
 import * as $EmojiList from "./islands/EmojiList.tsx";
+import * as $LanguageSwitcher from "./islands/LanguageSwitcher.tsx";
 import type { Manifest } from "$fresh/server.ts";
 
 const manifest = {
@@ -18,6 +19,7 @@ const manifest = {
   islands: {
     "./islands/EmojiForm.tsx": $EmojiForm,
     "./islands/EmojiList.tsx": $EmojiList,
+    "./islands/LanguageSwitcher.tsx": $LanguageSwitcher,
   },
   baseUrl: import.meta.url,
 } satisfies Manifest;

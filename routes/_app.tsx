@@ -1,10 +1,12 @@
 import { PageProps } from "$fresh/server.ts";
 import { ApplicationURL } from "../data/constants.ts";
+import { Data } from "./index.tsx";
 
-export default function Layout({ Component }: PageProps) {
+export default function Layout({ Component, data }: PageProps<Data>) {
   const ogpImage = `${ApplicationURL}ogp.png`;
+  const currentLang = data.language;
   return (
-    <html lang="ja">
+    <html lang={currentLang}>
       <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
