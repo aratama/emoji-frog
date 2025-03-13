@@ -12,16 +12,14 @@ export default function Layout({ Component, data }: PageProps<Data>) {
           async
           src="https://www.googletagmanager.com/gtag/js?id=G-7P3DZC7D3N"
         ></script>
-
         <script
           // deno-lint-ignore react-no-danger
           dangerouslySetInnerHTML={{
-            __html: `
-window.dataLayer = window.dataLayer || [];
+            __html: `window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
-gtag('config', 'G-7P3DZC7D3N');
-`.trim(),
+
+gtag('config', 'G-7P3DZC7D3N');`,
           }}
         ></script>
         <meta charset="utf-8" />
