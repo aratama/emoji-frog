@@ -28,7 +28,8 @@
     "$std/": "https://deno.land/std@0.216.0/",
     "zod": "https://deno.land/x/zod@v3.22.4/mod.ts",
     "i18next": "https://esm.sh/i18next@23.10.1",
-    "i18next-browser-languagedetector": "https://esm.sh/i18next-browser-languagedetector@7.2.0"
+    "i18next-browser-languagedetector": "https://esm.sh/i18next-browser-languagedetector@7.2.0",
+    "@anthropic-ai/sdk": "https://esm.sh/@anthropic-ai/sdk@0.39.0"
   },
   "compilerOptions": {
     "jsx": "react-jsx",
