@@ -23,6 +23,7 @@ export const handler: Handlers<Data> = {
     // リクエストヘッダーから 'Accept-Language' を取得
     let languageByHeader: Languages | undefined = languageBySearchParams;
     const acceptLanguage = req.headers.get("accept-language");
+    console.log("accept-language", acceptLanguage);
     if (acceptLanguage) {
       // カンマで区切られた言語タグを取得し、優先度の高い順にソート
       const languages = acceptLanguage
@@ -33,8 +34,14 @@ export const handler: Handlers<Data> = {
         })
         .sort((a, b) => b.q - a.q);
 
-      // 最優先の言語コードを取得
-      languageByHeader = languageSchema.parse(languages[0].code);
+      // 最優先の言語コードを取得（languages配列が空でないことを確認）
+      if (languages.length > 0) {
+        // safeParse を使用してエラーをキャッチ
+        const parseResult = languageSchema.safeParse(languages[0].code);
+        if (parseResult.success) {
+          languageByHeader = parseResult.data;
+        }
+      }
     }
 
     return ctx.render({
